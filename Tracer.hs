@@ -38,7 +38,7 @@ sampler o d = if (m == UPMISS)
                 else
                   if (m == DOWNMISS)
                      then
-                       if (((.&.) 1 (toInteger ((ceiling $ v3x h2) + (ceiling $ v3y h2)))) > 0)
+                       if (even (toInteger ((ceiling $ v3x h2) + (ceiling $ v3y h2))))
                           then Vector3 3 1 1
                           else vscale (Vector3 3 3 3) (b2 * 0.2 + 0.1)
                      else (Vector3 p p p) + (sampler h r) * 0.5
