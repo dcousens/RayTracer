@@ -14,7 +14,7 @@ randR = 0.5
 data TraceResult = HIT | UPMISS | DOWNMISS deriving Eq
 
 tracef :: Vector3 Double -> Vector3 Double -> Int -> Int -> Int -> (TraceResult, Vector3 Double, Double)
-tracef o d mask j k = if ((masked > 0) && (q > 0) && (s > 0.01) && (s < pt))
+tracef o d mask j k = if (masked && (q > 0) && (s > 0.01) && (s < pt))
         then (HIT, vunit (vp + (vscale d s)), s)
         else (pm, Vector3 0 0 1, pt)
         where
@@ -23,7 +23,7 @@ tracef o d mask j k = if ((masked > 0) && (q > 0) && (s > 0.01) && (s < pt))
           c = (vdot vp vp) - 1
           q = b * b - c
           s = (-b) - sqrt q
-          masked = (.&.) mask $ shiftL 1 k
+          masked = ((.&.) mask $ shiftL 1 k) > 0
           p = -((v3z o) / (v3z d))
           pm = if 0.01 < p then DOWNMISS else UPMISS
           pt = if 0.01 < p then p else 1e9
@@ -62,7 +62,7 @@ eyeOffset = (cameraUp + cameraRight) * (-256) + cameraForward
 
 sample :: Int -> Int -> Vector3 Double
 sample x y = p * 3.5 where
-        base = Vector3 17 16 8
+        base = Vector3 16 18 8
         t = (cameraUp * (randR - 0.5)) * 99 + (cameraRight * (randR - 0.5)) * 99
         rx = (randR + fromIntegral x)
         ry = (randR + fromIntegral y)
