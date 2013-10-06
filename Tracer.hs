@@ -4,7 +4,7 @@ import Data.Ord
 import Vec
 
 -- constants
-myBits = [247570, 280596, 280600, 249748, 18578, 18577, 231184, 16, 16]
+myBits = [38801, 38033, 38033, 42129, 58513, 38033, 38037, 38043, 59281]
 
 -- uh, TODO
 randR :: Fractional a => a
