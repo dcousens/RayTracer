@@ -38,7 +38,7 @@ sampler o d = if (m == UPMISS)
                 else
                   if (m == DOWNMISS)
                      then
-                       if (even (toInteger ((ceiling $ v3x h2) + (ceiling $ v3y h2))))
+                       if (even (toInteger ((ceiling $ v3x h2) + (ceiling $ v3y h2)))) -- FIXME: Something is going wrong here, or around here
                           then Vector3 3 1 1
                           else vscale (Vector3 3 3 3) (b2 * 0.2 + 0.1)
                      else (Vector3 p p p) + (sampler h r) * 0.5
@@ -63,7 +63,7 @@ eyeOffset = (cameraUp + cameraRight) * (-256) + cameraForward
 sample :: Int -> Int -> Int -> Vector3 Double
 sample x y r = p * 3.5 where
         base = Vector3 16 18 8
-        rr = (fromIntegral r) / 64 -- FIXME: Uniform sampling instead of Monte Carlo
+        rr = (fromIntegral r) / 64 -- FIXME: Use Monte Carlo sampling instead of non-random uniform sampling
         t = (cameraUp * (rr - 0.5)) * 99 + (cameraRight * (rr - 0.5)) * 99
         rx = (rr + fromIntegral x)
         ry = (rr + fromIntegral y)
@@ -82,7 +82,7 @@ main = do
 -- utils
 toPPM :: [Vector3 Double] -> IO ()
 toPPM pixels = do
-        putStrLn "P3 512 512 255 " -- FIXME
+        putStrLn "P3 512 512 255 " -- FIXME: Infer dimensions from parameters... or pass in parameters
         mapM_ fmtPixel pixels
         where fmtPixel :: Vector3 Double -> IO ()
               fmtPixel (Vector3 r g b) = putStrLn (show (floor r) ++ " " ++ show (floor g) ++ " " ++ show (floor b))
