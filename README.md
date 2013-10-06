@@ -8,6 +8,6 @@ If you don't want to be waiting for several minutes, your best bet is to ensure 
 
 `ghc -O Tracer.hs`
 
-# How to run?
+## How to run?
 
 `./Tracer > output.ppm`
