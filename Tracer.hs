@@ -60,17 +60,18 @@ cameraUp = (vunit ((Vector3 0 0 1) `vcross` cameraForward)) * 0.002
 cameraRight = (vunit (cameraForward `vcross` cameraUp)) * 0.002
 eyeOffset = (cameraUp + cameraRight) * (-256) + cameraForward
 
-sample :: Int -> Int -> Vector3 Double
-sample x y = p * 3.5 where
+sample :: Int -> Int -> Int -> Vector3 Double
+sample x y r = p * 3.5 where
         base = Vector3 16 18 8
-        t = (cameraUp * (randR - 0.5)) * 99 + (cameraRight * (randR - 0.5)) * 99
-        rx = (randR + fromIntegral x)
-        ry = (randR + fromIntegral y)
+        rr = (fromIntegral r) / 64 -- FIXME: Uniform sampling instead of Monte Carlo
+        t = (cameraUp * (rr - 0.5)) * 99 + (cameraRight * (rr - 0.5)) * 99
+        rx = (rr + fromIntegral x)
+        ry = (rr + fromIntegral y)
         dir = vunit (-t + ((cameraUp * rx) + (cameraRight * ry) + eyeOffset) * 16)
         p = sampler (base + t) dir
 
 sample64 :: Int -> Int -> Vector3 Double
-sample64 x y = foldl (+) (Vector3 13 13 13) [sample x y | _ <- [0 .. 63]]
+sample64 x y = foldl (+) (Vector3 13 13 13) [sample x y r | r <- [0 .. 63]]
 
 -- program
 main :: IO ()
