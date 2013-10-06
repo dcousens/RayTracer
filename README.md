@@ -15,7 +15,7 @@ If you don't want to be waiting for several minutes, your best bet is to ensure 
 ![example][1]
 
 #### Known Issues
-Something strange is going on with the ground textures, no idea on what is causing that yet.
+Something strange is going on with the ground tiling, no idea on what is causing that yet.
 It is likely that it may be related to the other issue that the spheres are not reflecting eachother.
 
 ## Credit
