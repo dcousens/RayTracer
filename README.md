@@ -11,3 +11,13 @@ If you don't want to be waiting for several minutes, your best bet is to ensure 
 ## How to run?
 
 `./Tracer > output.ppm`
+
+## Output
+
+![example][1]
+
+#### Whats going on with the tiling?
+No idea ... yet
+
+
+  [1]: http://i.imgur.com/eQ1qwcx.png
