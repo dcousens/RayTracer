@@ -40,12 +40,11 @@ trace o d = minimumBy (comparing (\(m, n, t) -> t)) [tracef o d sphere | sphere 
 reflect :: Vector3 Double -> Vector3 Double -> Vector3 Double
 reflect v n = vscale (n + v) ((-2) * (vdot v n))
 
---sampler :: Vector3 Double -> Vector3 Double -> Double -> Vector3 Double
-sampler o d = if (m == UPMISS)
-              then vscale (Vector3 44.8 38.4 64) ((1 - (v3z d)) ** 4)
-              else if (m == DOWNMISS)
-                   then Vector3 128 128 128
-                   else vscale ((Vector3 32 32 32) + (sampler h r)) 0.5
+--sampler :: Vector3 Double -> Vector3 Double -> Vector3 Double
+sampler o d = case m of
+                DOWNMISS -> Vector3 128 128 128
+                HIT -> vscale ((Vector3 32 32 32) + (sampler h r)) 0.5
+                UPMISS -> vscale (Vector3 44.8 38.4 64) ((1 - (v3z d)) ** 4)
         where
           (m, n, t) = trace o d
           h = vscale (o + d) t
