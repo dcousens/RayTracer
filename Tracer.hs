@@ -22,16 +22,15 @@ tracef o d so =
            then (HIT, vunit (oso + (vscale d s)), s)
            else (pm, Vector3 0 0 1, 1e9)
         where
-          p = ((v3z o) / (v3z d))
-          pm = if p > 0 then UPMISS else DOWNMISS
-          pt = if p > 0 then p else 1e9
+        p = (v3z o) / (v3z d)
+        (pm, pt) = if p > 0 then (UPMISS, 1e9) else (DOWNMISS, p)
 
-          (oso, r) = (o + so, 0.5)
+        (oso, r) = (o + so, 0.5)
 
-          b = vdot oso d
-          c = (vdot oso oso) - r
-          q = b * b - c
-          s = (-b) - sqrt q
+        b = vdot oso d
+        c = (vdot oso oso) - r
+        q = b * b - c
+        s = (-b) - sqrt q
 
 trace :: Vector3 Double -> Vector3 Double -> (TraceResult, Vector3 Double, Double)
 trace o d = minimumBy (comparing (\(m, n, t) -> t)) [tracef o d sphere | sphere <- spheres]
@@ -46,9 +45,9 @@ sampler o d = case m of
                 HIT -> vscale ((Vector3 32 32 32) + (sampler h r)) 0.5
                 UPMISS -> vscale (Vector3 44.8 38.4 64) ((1 - (v3z d)) ** 4)
         where
-          (m, n, t) = trace o d
-          h = vscale (o + d) t
-          r = reflect d n
+        (m, n, t) = trace o d
+        h = vscale (o + d) t
+        r = reflect d n
 
 -- multi-sampling and view transform
 base = Vector3 16 18 8
