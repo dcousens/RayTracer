@@ -45,9 +45,9 @@ sampler o d = case m of
                 HIT -> vscale ((Vector3 32 32 32) + (sampler h r)) 0.5
                 UPMISS -> vscale (Vector3 44.8 38.4 64) ((1 - (v3z d)) ** 4)
         where
-        (m, n, t) = trace o d
-        h = vscale (o + d) t
-        r = reflect d n
+        (hitResult, normal, t) = trace o d
+        h = o + (vscale d t)
+        r = reflect d normal
 
 -- multi-sampling and view transform
 base = Vector3 16 18 8
