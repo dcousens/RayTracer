@@ -20,10 +20,10 @@ tracef :: Vector3 Double -> Vector3 Double -> Vector3 Double -> (TraceResult, Ve
 tracef o d so =
         if (s > 0)
            then (HIT, vunit (oso + (vscale d s)), s)
-           else (pm, Vector3 0 0 1, 1e9)
+           else (pm, Vector3 0 0 1, pt)
         where
-        p = (v3z o) / (v3z d)
-        (pm, pt) = if p > 0 then (UPMISS, 1e9) else (DOWNMISS, p)
+        p = -((v3z o) / (v3z d))
+        (pm, pt) = if p < 0 then (UPMISS, 1e9) else (DOWNMISS, p)
 
         (oso, r) = (o + so, 0.5)
 
@@ -40,14 +40,16 @@ reflect :: Vector3 Double -> Vector3 Double -> Vector3 Double
 reflect v n = vscale (n + v) ((-2) * (vdot v n))
 
 --sampler :: Vector3 Double -> Vector3 Double -> Vector3 Double
-sampler o d = case m of
-                DOWNMISS -> Vector3 128 128 128
+sampler o d = case hitResult of
+                DOWNMISS -> if (even $ (ceiling hx) + (ceiling hy)) then Vector3 192 192 192 else Vector3 192 64 64
                 HIT -> vscale ((Vector3 32 32 32) + (sampler h r)) 0.5
-                UPMISS -> vscale (Vector3 44.8 38.4 64) ((1 - (v3z d)) ** 4)
+                UPMISS -> vscale (Vector3 64 48 128) ((1 - (v3z d)) ** 2)
         where
         (hitResult, normal, t) = trace o d
         h = o + (vscale d t)
         r = reflect d normal
+        sh = h * 0.2
+        (hx, hy) = (v3x sh, v3y sh)
 
 -- multi-sampling and view transform
 base = Vector3 16 18 8
