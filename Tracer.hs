@@ -4,8 +4,7 @@ import Data.Ord
 import Vec
 
 -- constants
---bitVector = [38801, 38033, 38033, 42129, 58513, 38033, 38037, 38043, 59281] :: [Int]
-bitVector = [247570, 280596, 280600, 249748, 18578, 18577, 231184, 16, 16] :: [Int]
+bitVector = [101388, 50712, 25392, 12775, 6336, 12703, 25344, 50688, 101376] :: [Int]
 
 spheres :: [Vector3 Double]
 spheres = map fst $ filter snd $ zip sphereGrid sphereMask
