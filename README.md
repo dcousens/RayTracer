@@ -1,7 +1,7 @@
 RayTracer
 =========
 
-A Haskell implementation of Paul Heckbert's business card raytracer.
+A Haskell implementation of Paul Heckbert's business card ray tracer.
 
 ## How to build?
 If you don't want to be waiting for several minutes, your best bet is to ensure `-O` flag is enabled when compiling.
@@ -14,9 +14,8 @@ If you don't want to be waiting for several minutes, your best bet is to ensure 
 ## Output
 ![example][1]
 
-#### Known Issues
-Something strange is going on with the ground tiling, no idea on what is causing that yet.
-It is likely that it may be related to the other issue that the spheres are not reflecting eachother.
+## Known Issues
+This rendition of the ray tracer does not do any multi-sampling (yet) or lambert illumination of the ground tiling.
 
 ## Credit
 This source is based on [Fabiens](http://fabiensanglard.net/rayTracing_back_of_business_card/index.php) breakdown of Paul Heckbert's original code.
@@ -24,4 +23,4 @@ This source is based on [Fabiens](http://fabiensanglard.net/rayTracing_back_of_b
 Special thanks to `#haskell` for helping me with my million questions.
 
 
-  [1]: http://i.imgur.com/eQ1qwcx.png
+  [1]: http://i.imgur.com/11XBtCx.png
