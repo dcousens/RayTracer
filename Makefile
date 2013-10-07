@@ -4,7 +4,7 @@
 build:
 	ghc -O2 Tracer.hs
 
-run:
+run: build
 	time ./Tracer | feh -
 
 clean:
