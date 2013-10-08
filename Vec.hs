@@ -37,7 +37,7 @@ vnormSq :: Num t => Vector3 t -> t
 vnormSq v = vdot v v
 
 vnorm = fromFloat . sqrt . vnormSq
-
+vreflect v n = vscale (n + v) ((-2) * (vdot v n))
 vscale v s = fmap (s *) v
 
 vunit :: Vector3 Double -> Vector3 Double

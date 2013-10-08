@@ -21,22 +21,16 @@ tracef o d so =
            then (HIT, vunit (oso + (vscale d s)), s)
            else (pm, Vector3 0 0 1, pt)
         where
-        p = -((v3z o) / (v3z d))
-        (pm, pt) = if p < 0 then (UPMISS, 1e9) else (DOWNMISS, p)
-
         (oso, r) = (o + so, 0.5)
-
         b = vdot oso d
         c = (vdot oso oso) - r
         q = b * b - c
         s = (-b) - sqrt q
+        p = -((v3z o) / (v3z d))
+        (pm, pt) = if p < 0 then (UPMISS, 1e9) else (DOWNMISS, p)
 
 trace :: Vector3 Double -> Vector3 Double -> (TraceResult, Vector3 Double, Double)
 trace o d = minimumBy (comparing (\(m, n, t) -> t)) [tracef o d sphere | sphere <- spheres]
-
--- world sampler
-reflect :: Vector3 Double -> Vector3 Double -> Vector3 Double
-reflect v n = vscale (n + v) ((-2) * (vdot v n))
 
 --sampler :: Vector3 Double -> Vector3 Double -> Vector3 Double
 sampler o d = case hitResult of
@@ -46,7 +40,7 @@ sampler o d = case hitResult of
         where
         (hitResult, normal, t) = trace o d
         h = o + (vscale d t)
-        r = reflect d normal
+        r = vreflect d normal
         sh = h * 0.2
         (hx, hy) = (v3x sh, v3y sh)
 
