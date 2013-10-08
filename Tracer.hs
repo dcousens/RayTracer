@@ -47,15 +47,15 @@ sampler o d = case hitResult of
 
 -- multi-sampling and view transform
 base = Vector3 16 18 8
-cameraForward = vunit (Vector3 (-6) (-16) 0)
-cameraUp = (vunit ((Vector3 0 0 1) `vcross` cameraForward))
-cameraRight = (vunit (cameraForward `vcross` cameraUp))
+cameraForward = vunit $ Vector3 (-6) (-16) 0
+cameraUp = vunit $ (Vector3 0 0 1) `vcross` cameraForward
+cameraRight = vunit $ cameraForward `vcross` cameraUp
 eyeOffset = (cameraUp + cameraRight) * (-0.512) + cameraForward
 
 sample :: Int -> Int -> Vector3 Double
 sample x y = p where
         (fx, fy) = (fromIntegral x, fromIntegral y)
-        dir = vunit ((cameraUp * 0.002 * fx) + (cameraRight * 0.002 * fy) + eyeOffset)
+        dir = vunit $ (cameraUp * 0.002 * fx) + (cameraRight * 0.002 * fy) + eyeOffset
         p = sampler base dir
 
 -- program
