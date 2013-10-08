@@ -34,27 +34,28 @@ trace o d = minimumBy (comparing (\(m, n, t) -> t)) [tracef o d sphere | sphere 
 
 --sampler :: Vector3 Double -> Vector3 Double -> Vector3 Double
 sampler o d = case hitResult of
-                DOWNMISS -> if (even $ (ceiling hx) + (ceiling hy)) then Vector3 192 192 192 else Vector3 192 64 64
+                DOWNMISS -> if (even $ (ceiling hx) + (ceiling hy)) then (Vector3 192 192 192) else (Vector3 64 128 64)
                 HIT -> vscale ((Vector3 32 32 32) + (sampler h r)) 0.5
-                UPMISS -> vscale (Vector3 64 48 128) ((1 - (v3z d)) ** 2)
+                UPMISS -> vscale (Vector3 64 48 128) atmDropOff
         where
         (hitResult, normal, t) = trace o d
         h = o + (vscale d t)
         r = vreflect d normal
         sh = h * 0.2
         (hx, hy) = (v3x sh, v3y sh)
+        atmDropOff = (1 - (v3z d)) ** 2
 
 -- multi-sampling and view transform
 base = Vector3 16 18 8
 cameraForward = vunit (Vector3 (-6) (-16) 0)
-cameraUp = (vunit ((Vector3 0 0 1) `vcross` cameraForward)) * 0.002
-cameraRight = (vunit (cameraForward `vcross` cameraUp)) * 0.002
-eyeOffset = (cameraUp + cameraRight) * (-256) + cameraForward
+cameraUp = (vunit ((Vector3 0 0 1) `vcross` cameraForward))
+cameraRight = (vunit (cameraForward `vcross` cameraUp))
+eyeOffset = (cameraUp + cameraRight) * (-0.512) + cameraForward
 
 sample :: Int -> Int -> Vector3 Double
 sample x y = p where
         (fx, fy) = (fromIntegral x, fromIntegral y)
-        dir = vunit ((cameraUp * fx) + (cameraRight * fy) + eyeOffset)
+        dir = vunit ((cameraUp * 0.002 * fx) + (cameraRight * 0.002 * fy) + eyeOffset)
         p = sampler base dir
 
 -- program
