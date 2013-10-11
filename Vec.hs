@@ -10,7 +10,7 @@ vzip f (Vector3 x0 y0 z0) (Vector3 x1 y1 z1) = Vector3 (f x0 x1) (f y0 y1) (f z0
 
 instance Fractional a => Fractional (Vector3 a) where
         (/) = vzip (/)
-        fromRational s = Vector3 (fromRational s) (fromRational s) (fromRational s)
+        fromRational s = fmap fromRational (Vector3 s s s)
 
 instance Functor Vector3 where
         fmap f (Vector3 x y z) = Vector3 (f x) (f y) (f z)
@@ -22,7 +22,7 @@ instance Num a => Num (Vector3 a) where
         abs = fmap abs
         negate = fmap negate
         signum = fmap signum
-        fromInteger s = Vector3 (fromInteger s) (fromInteger s) (fromInteger s)
+        fromInteger s = fmap fromInteger (Vector3 s s s)
 
 fromFloat :: (Fractional a, Real b) => b -> a
 fromFloat x = fromRational $ toRational x
