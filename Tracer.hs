@@ -4,13 +4,13 @@ import Data.Ord
 import Vec
 
 -- constants
-bitVector = [101388, 50712, 25392, 12775, 6336, 12703, 25344, 50688, 101376] :: [Int]
+logoBitMask = [101388, 50712, 25392, 12775, 6336, 12703, 25344, 50688, 101376] :: [Int]
 
 spheres :: [Vector3 Double]
 spheres = map fst $ filter snd $ zip sphereGrid sphereMask
           where fPos j k = Vector3 (fromIntegral $ -k) 0 ((fromIntegral $ -j) - 4)
-                sphereGrid = [fPos j k | j <- [0 .. length bitVector], k <- [0 .. 32]]
-                sphereMask = map (\x -> x > 0) [((.&.) b $ shiftL 1 k) | b <- bitVector, k <- [0 .. 32]]
+                sphereGrid = [fPos j k | j <- [0 .. length logoBitMask], k <- [0 .. 32]]
+                sphereMask = map (\x -> x > 0) [((.&.) b $ shiftL 1 k) | b <- logoBitMask, k <- [0 .. 32]]
 
 -- ray trace
 data TraceResult = HIT | UPMISS | DOWNMISS deriving Eq
