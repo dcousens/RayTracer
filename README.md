@@ -21,7 +21,7 @@ This rendition of the ray tracer does not do any multi-sampling (yet) or lambert
 
 
 ## Credit
-This source is based on [Fabiens](http://fabiensanglard.net/rayTracing_back_of_business_card/index.php) breakdown of [Andrew Kensler's busines card ray tracer](http://www.cs.utah.edu/~aek/code/card.cpp).
+This source is based on [Fabiens](http://fabiensanglard.net/rayTracing_back_of_business_card/index.php) breakdown of [Andrew Kensler's business card ray tracer](http://www.cs.utah.edu/~aek/code/card.cpp).
 
 Special thanks to `#haskell` for helping me with my million questions.
 
